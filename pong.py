@@ -35,7 +35,11 @@ paddle1_vel = 0
 paddle2_vel = 0
 l_score = 0
 r_score = 0
-game_over = False
+# Background Feature variables
+BACKGROUND = BLACK # Default colour for background
+BUTTON_RECT = pygame.Rect(10, HEIGHT - 40, 140, 30)
+BUTTON_COLOR = (100, 100, 255)
+BUTTON_TEXT_COLOR = WHITE
 
 #canvas declaration
 window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
@@ -72,7 +76,7 @@ def init():
 def draw(canvas):
     global paddle1_pos, paddle2_pos, ball_pos, ball_vel, l_score, r_score, game_over
            
-    canvas.fill(BLACK)
+    canvas.fill(BACKGROUND)
     pygame.draw.line(canvas, WHITE, [WIDTH // 2, 0],[WIDTH // 2, HEIGHT], 1)
     pygame.draw.line(canvas, WHITE, [PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1)
     pygame.draw.line(canvas, WHITE, [WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1)
@@ -137,6 +141,15 @@ def draw(canvas):
     myfont2 = pygame.font.SysFont("Comic Sans MS", 20)
     label2 = myfont2.render("Score "+str(r_score), 1, (255,255,0))
     canvas.blit(label2, (470, 20))  
+
+    #Draw Change Background button
+    pygame.draw.rect(canvas, BUTTON_COLOR, BUTTON_RECT)
+
+    font = pygame.font.SysFont(None, 24)
+    text = font.render("Change BG", True, BUTTON_TEXT_COLOR)
+    text_rect = text.get_rect(center=BUTTON_RECT.center)
+    canvas.blit(text, text_rect)
+
     
     
 #keydown handler
@@ -195,9 +208,16 @@ while True:
             keydown(event)
         elif event.type == KEYUP:
             keyup(event)
+        elif event.type == MOUSEBUTTONDOWN:
+            if BUTTON_RECT.collidepoint(event.pos):
+                if BACKGROUND == BLACK:
+                    BACKGROUND = (30, 30, 30)
+                else:
+                    BACKGROUND = BLACK
         elif event.type == QUIT:
             pygame.quit()
             sys.exit()
+
             
     pygame.display.update()
     fps.tick(60)
