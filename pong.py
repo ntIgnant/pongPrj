@@ -28,13 +28,14 @@ PAD_WIDTH = 8
 PAD_HEIGHT = 80
 HALF_PAD_WIDTH = PAD_WIDTH // 2
 HALF_PAD_HEIGHT = PAD_HEIGHT // 2
-MAX_SCORE = 2
+MAX_SCORE = 5
 ball_pos = [0,0]
 ball_vel = [0,0]
 paddle1_vel = 0
 paddle2_vel = 0
 l_score = 0
 r_score = 0
+game_over = False
 # Background Feature variables
 BACKGROUND = BLACK # Default colour for background
 BUTTON_RECT = pygame.Rect(10, HEIGHT - 40, 140, 30)
