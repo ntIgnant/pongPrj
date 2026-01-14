@@ -28,12 +28,14 @@ PAD_WIDTH = 8
 PAD_HEIGHT = 80
 HALF_PAD_WIDTH = PAD_WIDTH // 2
 HALF_PAD_HEIGHT = PAD_HEIGHT // 2
+MAX_SCORE = 5
 ball_pos = [0,0]
 ball_vel = [0,0]
 paddle1_vel = 0
 paddle2_vel = 0
 l_score = 0
 r_score = 0
+game_over = False
 
 #canvas declaration
 window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
@@ -68,7 +70,7 @@ def init():
 
 #draw function of canvas
 def draw(canvas):
-    global paddle1_pos, paddle2_pos, ball_pos, ball_vel, l_score, r_score
+    global paddle1_pos, paddle2_pos, ball_pos, ball_vel, l_score, r_score, game_over
            
     canvas.fill(BLACK)
     pygame.draw.line(canvas, WHITE, [WIDTH // 2, 0],[WIDTH // 2, HEIGHT], 1)
@@ -114,6 +116,8 @@ def draw(canvas):
     elif int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH:
         r_score += 1
         ball_init(True)
+        if r_score >= MAX_SCORE:
+            game_over = True
         
     if int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH and int(ball_pos[1]) in range(paddle2_pos[1] - HALF_PAD_HEIGHT,paddle2_pos[1] + HALF_PAD_HEIGHT,1):
         ball_vel[0] = -ball_vel[0]
@@ -122,6 +126,8 @@ def draw(canvas):
     elif int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH:
         l_score += 1
         ball_init(False)
+        if l_score >= MAX_SCORE:
+            game_over = True
 
     #update scores
     myfont1 = pygame.font.SysFont("Comic Sans MS", 20)
@@ -161,7 +167,27 @@ init()
 #game loop
 while True:
 
-    draw(window)
+    if game_over == False:
+        draw(window)
+    else:
+        window.fill(BLACK)
+        myfont1 = pygame.font.SysFont("Comic Sans MS", 20)
+        label1 = myfont1.render("GAME OVER!", 1, (255,255,255))
+        window.blit(label1, (225, 135))
+        
+        if l_score == MAX_SCORE:
+            myfont2 = pygame.font.SysFont("Comic Sans MS", 20)
+            label2 = myfont2.render("Left Player Won", 1, (255,255,255))
+            window.blit(label2, (215,165))
+            
+        elif r_score == MAX_SCORE:
+            myfont2 = pygame.font.SysFont("Comic Sans MS", 20)
+            label2 = myfont2.render("Right Player Won", 1, (255,255,255))
+            window.blit(label2, (205,165))
+        
+        myfont3 = pygame.font.SysFont("Comic Sans MS", 20)
+        label3 = myfont3.render("Press 'R' To Restart", 1, (255,255,255))
+        window.blit(label3, (190, 195))
 
     for event in pygame.event.get():
 
