@@ -28,7 +28,7 @@ PAD_WIDTH = 8
 PAD_HEIGHT = 80
 HALF_PAD_WIDTH = PAD_WIDTH // 2
 HALF_PAD_HEIGHT = PAD_HEIGHT // 2
-MAX_SCORE = 5
+MAX_SCORE = 2
 ball_pos = [0,0]
 ball_vel = [0,0]
 paddle1_vel = 0
@@ -141,7 +141,7 @@ def draw(canvas):
     
 #keydown handler
 def keydown(event):
-    global paddle1_vel, paddle2_vel
+    global paddle1_vel, paddle2_vel, l_score, r_score, game_over
     
     if event.key == K_UP:
         paddle2_vel = -8
@@ -151,6 +151,11 @@ def keydown(event):
         paddle1_vel = -8
     elif event.key == K_s:
         paddle1_vel = 8
+    elif event.key == K_r:
+        l_score = 0
+        r_score = 0
+        game_over = False
+        draw(window)
 
 #keyup handler
 def keyup(event):
