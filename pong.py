@@ -35,6 +35,7 @@ paddle1_vel = 0
 paddle2_vel = 0
 l_score = 0
 r_score = 0
+game_over = False
 # Background Feature variables
 BACKGROUND = BLACK # Default colour for background
 BUTTON_RECT = pygame.Rect(10, HEIGHT - 40, 140, 30)
