@@ -19,6 +19,9 @@ WHITE = (255,255,255)
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLACK = (0,0,0)
+GRAY = (148,148,148)
+PURPLE = (112,0,112)
+ORANGE = (204,143,0)
 
 #globals
 WIDTH = 600
@@ -36,9 +39,11 @@ paddle2_vel = 0
 l_score = 0
 r_score = 0
 game_over = False
+backgroundColor_index = 0 # 'black' by defaul
 # Background Feature variables
-BACKGROUND = BLACK # Default colour for background
-BUTTON_RECT = pygame.Rect(10, HEIGHT - 40, 140, 30)
+BACKGROUND_COL_LIST = [BLACK, GRAY, PURPLE, ORANGE]
+BACKGROUND = BACKGROUND_COL_LIST[backgroundColor_index] # BLACK as Default colour for background
+BUTTON_RECT = pygame.Rect(WIDTH//2 - 70, HEIGHT - 40, 140, 30)
 BUTTON_COLOR = (100, 100, 255)
 BUTTON_TEXT_COLOR = WHITE
 
@@ -216,10 +221,9 @@ while True:
             keyup(event)
         elif event.type == MOUSEBUTTONDOWN:
             if BUTTON_RECT.collidepoint(event.pos):
-                if BACKGROUND == BLACK:
-                    BACKGROUND = (30, 30, 30)
-                else:
-                    BACKGROUND = BLACK
+                backgroundColor_index = (backgroundColor_index + 1) % len(BACKGROUND_COL_LIST)
+                BACKGROUND = BACKGROUND_COL_LIST[backgroundColor_index]
+
         elif event.type == QUIT:
             pygame.quit()
             sys.exit()
